@@ -74,7 +74,7 @@ namespace CodeCompete.Migrations
                     b.Property<int>("GameId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthorId");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("Description");
 
@@ -86,11 +86,11 @@ namespace CodeCompete.Migrations
 
                     b.HasKey("GameId");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ProgrammingLanguageId");
 
-                    b.ToTable("Games");
+                    b.ToTable("Game");
                 });
 
             modelBuilder.Entity("CodeCompete.Data.Player", b =>
@@ -98,7 +98,7 @@ namespace CodeCompete.Migrations
                     b.Property<int>("PlayerId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthorId");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("Description");
 
@@ -112,13 +112,13 @@ namespace CodeCompete.Migrations
 
                     b.HasKey("PlayerId");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("GameId");
 
                     b.HasIndex("ProgrammingLanguageId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Player");
                 });
 
             modelBuilder.Entity("CodeCompete.Data.ProgrammingLanguage", b =>
@@ -130,7 +130,7 @@ namespace CodeCompete.Migrations
 
                     b.HasKey("ProgrammingLanguageId");
 
-                    b.ToTable("ProgrammingLanguages");
+                    b.ToTable("ProgrammingLanguage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -242,9 +242,9 @@ namespace CodeCompete.Migrations
 
             modelBuilder.Entity("CodeCompete.Data.Game", b =>
                 {
-                    b.HasOne("CodeCompete.Data.ApplicationUser", "Author")
+                    b.HasOne("CodeCompete.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("CodeCompete.Data.ProgrammingLanguage", "ProgrammingLanguage")
                         .WithMany()
@@ -253,9 +253,9 @@ namespace CodeCompete.Migrations
 
             modelBuilder.Entity("CodeCompete.Data.Player", b =>
                 {
-                    b.HasOne("CodeCompete.Data.ApplicationUser", "Author")
+                    b.HasOne("CodeCompete.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("CodeCompete.Data.Game", "Game")
                         .WithMany("Players")

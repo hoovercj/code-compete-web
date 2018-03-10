@@ -14,9 +14,9 @@ namespace CodeCompete.Data
         {
         }
 
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Player> Players { get; set; }
-        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public DbSet<Game> Game { get; set; }
+        public DbSet<Player> Player { get; set; }
+        public DbSet<ProgrammingLanguage> ProgrammingLanguage { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

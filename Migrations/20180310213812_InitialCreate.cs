@@ -48,7 +48,7 @@ namespace CodeCompete.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProgrammingLanguages",
+                name: "ProgrammingLanguage",
                 columns: table => new
                 {
                     ProgrammingLanguageId = table.Column<int>(nullable: false)
@@ -57,7 +57,7 @@ namespace CodeCompete.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProgrammingLanguages", x => x.ProgrammingLanguageId);
+                    table.PrimaryKey("PK_ProgrammingLanguage", x => x.ProgrammingLanguageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,12 +167,12 @@ namespace CodeCompete.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Games",
+                name: "Game",
                 columns: table => new
                 {
                     GameId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AuthorId = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     ProgrammingLanguageId = table.Column<int>(nullable: true),
@@ -180,28 +180,28 @@ namespace CodeCompete.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Games", x => x.GameId);
+                    table.PrimaryKey("PK_Game", x => x.GameId);
                     table.ForeignKey(
-                        name: "FK_Games_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_Game_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Games_ProgrammingLanguages_ProgrammingLanguageId",
+                        name: "FK_Game_ProgrammingLanguage_ProgrammingLanguageId",
                         column: x => x.ProgrammingLanguageId,
-                        principalTable: "ProgrammingLanguages",
+                        principalTable: "ProgrammingLanguage",
                         principalColumn: "ProgrammingLanguageId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Players",
+                name: "Player",
                 columns: table => new
                 {
                     PlayerId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AuthorId = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     GameId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -210,23 +210,23 @@ namespace CodeCompete.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Players", x => x.PlayerId);
+                    table.PrimaryKey("PK_Player", x => x.PlayerId);
                     table.ForeignKey(
-                        name: "FK_Players_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_Player_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Players_Games_GameId",
+                        name: "FK_Player_Game_GameId",
                         column: x => x.GameId,
-                        principalTable: "Games",
+                        principalTable: "Game",
                         principalColumn: "GameId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Players_ProgrammingLanguages_ProgrammingLanguageId",
+                        name: "FK_Player_ProgrammingLanguage_ProgrammingLanguageId",
                         column: x => x.ProgrammingLanguageId,
-                        principalTable: "ProgrammingLanguages",
+                        principalTable: "ProgrammingLanguage",
                         principalColumn: "ProgrammingLanguageId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -269,28 +269,28 @@ namespace CodeCompete.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_AuthorId",
-                table: "Games",
-                column: "AuthorId");
+                name: "IX_Game_ApplicationUserId",
+                table: "Game",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_ProgrammingLanguageId",
-                table: "Games",
+                name: "IX_Game_ProgrammingLanguageId",
+                table: "Game",
                 column: "ProgrammingLanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_AuthorId",
-                table: "Players",
-                column: "AuthorId");
+                name: "IX_Player_ApplicationUserId",
+                table: "Player",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_GameId",
-                table: "Players",
+                name: "IX_Player_GameId",
+                table: "Player",
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_ProgrammingLanguageId",
-                table: "Players",
+                name: "IX_Player_ProgrammingLanguageId",
+                table: "Player",
                 column: "ProgrammingLanguageId");
         }
 
@@ -312,19 +312,19 @@ namespace CodeCompete.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "Player");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Games");
+                name: "Game");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "ProgrammingLanguages");
+                name: "ProgrammingLanguage");
         }
     }
 }

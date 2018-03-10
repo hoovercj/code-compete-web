@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeCompete.Data
 {
     public class Player
     {
-        public ApplicationUser Author { get; set; }
+        [Display(Name = "Created By")]
+        public ApplicationUser ApplicationUser { get; set; }
         public int PlayerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
