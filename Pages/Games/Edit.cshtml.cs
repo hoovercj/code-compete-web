@@ -16,9 +16,6 @@ namespace CodeCompete.Pages.Games
 
         public List<SelectListItem> Languages { get; }
 
-        [BindProperty]
-        public int SelectedLanguage { get; set; }
-
         public EditModel(CodeCompete.Data.ApplicationDbContext context)
         {
             _context = context;
@@ -50,8 +47,7 @@ namespace CodeCompete.Pages.Games
                 return NotFound();
             }
 
-            SelectedLanguage = Game.ProgrammingLanguage.ProgrammingLanguageId;
-            Languages.Where(l => l.Value == SelectedLanguage.ToString()).FirstOrDefault().Selected = true;
+            Languages.Where(l => l.Value == Game.ProgrammingLanguage.ProgrammingLanguageId.ToString()).FirstOrDefault().Selected = true;
 
 
             return Page();
@@ -63,7 +59,6 @@ namespace CodeCompete.Pages.Games
             {
                 return Page();
             }
-            Game.ProgrammingLanguage = _context.ProgrammingLanguage.Where(l => l.ProgrammingLanguageId == SelectedLanguage).FirstOrDefault();
             _context.Attach(Game).State = EntityState.Modified;
 
             try
