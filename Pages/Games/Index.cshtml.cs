@@ -22,7 +22,10 @@ namespace CodeCompete.Pages.Games
 
         public async Task OnGetAsync()
         {
-            Game = await _context.Game.ToListAsync();
+            Game = await _context.Game
+                .Include(g => g.ProgrammingLanguage)
+                .Include(g => g.ApplicationUser)
+                .ToListAsync();
         }
     }
 }

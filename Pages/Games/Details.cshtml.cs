@@ -29,6 +29,7 @@ namespace CodeCompete.Pages.Games
 
             Game = await _context.Game
                 .Include(g => g.ApplicationUser)
+                .Include(g => g.ProgrammingLanguage)
                 .SingleOrDefaultAsync(m => m.GameId == id);
 
             if (Game == null)

@@ -11,7 +11,7 @@ using System;
 namespace CodeCompete.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180310213812_InitialCreate")]
+    [Migration("20180311093936_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

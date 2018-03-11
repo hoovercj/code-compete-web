@@ -20,6 +20,12 @@
                     @Html.DisplayNameFor(model => model.Game[0].Description)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Game[0].ApplicationUser)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game[0].ProgrammingLanguage)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Game[0].SourceCode)
                 </th>
             <th></th>
@@ -33,6 +39,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgrammingLanguage.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SourceCode)
