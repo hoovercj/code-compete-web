@@ -11,6 +11,7 @@ namespace CodeCompete.Data
         public ApplicationUser ApplicationUser { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        [Display(Name = "Language")]
         public ProgrammingLanguage ProgrammingLanguage { get; set; }
         [Display(Name = "Source Code")]
         public string SourceCode { get; set; }

@@ -14,9 +14,21 @@ namespace CodeCompete.Pages.Games
     {
         private readonly CodeCompete.Data.ApplicationDbContext _context;
 
+        public List<SelectListItem> Languages { get; }
+
+        [BindProperty]
+        public int SelectedLanguage { get; set; }
+
         public EditModel(CodeCompete.Data.ApplicationDbContext context)
         {
             _context = context;
+
+            Languages = context.ProgrammingLanguage
+                .Select(l => new SelectListItem
+                {
+                    Value = l.ProgrammingLanguageId.ToString(),
+                    Text = l.Name,
+                }).ToList();
         }
 
         [BindProperty]
@@ -29,12 +41,19 @@ namespace CodeCompete.Pages.Games
                 return NotFound();
             }
 
-            Game = await _context.Game.SingleOrDefaultAsync(m => m.GameId == id);
+            Game = await _context.Game
+                .Include(g => g.ProgrammingLanguage)
+                .SingleOrDefaultAsync(m => m.GameId == id);
 
             if (Game == null)
             {
                 return NotFound();
             }
+
+            SelectedLanguage = Game.ProgrammingLanguage.ProgrammingLanguageId;
+            Languages.Where(l => l.Value == SelectedLanguage.ToString()).FirstOrDefault().Selected = true;
+
+
             return Page();
         }
 
@@ -44,7 +63,7 @@ namespace CodeCompete.Pages.Games
             {
                 return Page();
             }
-
+            Game.ProgrammingLanguage = _context.ProgrammingLanguage.Where(l => l.ProgrammingLanguageId == SelectedLanguage).FirstOrDefault();
             _context.Attach(Game).State = EntityState.Modified;
 
             try

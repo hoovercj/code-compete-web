@@ -15,14 +15,25 @@ namespace CodeCompete.Pages.Games
         private readonly CodeCompete.Data.ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        public List<SelectListItem> Languages { get; }
+
+        [BindProperty]
+        public int SelectedLanguage { get; set; } = 0;
+
         public CreateModel(
             CodeCompete.Data.ApplicationDbContext context,
             UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
+            Languages = context.ProgrammingLanguage
+                .Select(l => new SelectListItem
+                {
+                    Value = l.ProgrammingLanguageId.ToString(),
+                    Text = l.Name,
+                    Selected = l.ProgrammingLanguageId == SelectedLanguage
+                }).ToList();
         }
-
         public IActionResult OnGet()
         {
             return Page();
@@ -45,6 +56,7 @@ namespace CodeCompete.Pages.Games
                 throw new ApplicationException("Cannot create a game with a user.");
             }
 
+            Game.ProgrammingLanguage = _context.ProgrammingLanguage.Where(l => l.ProgrammingLanguageId == SelectedLanguage).FirstOrDefault();
             _context.Game.Add(Game);
             await _context.SaveChangesAsync();
 
