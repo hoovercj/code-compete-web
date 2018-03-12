@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CodeCompete.Data;
 
-namespace CodeCompete.Pages.Games
+namespace CodeCompete.Pages.Players
 {
     public class CreateModel : PageModel
     {
         private readonly CodeCompete.Data.ApplicationDbContext _context;
+
         private readonly UserManager<ApplicationUser> _userManager;
 
         public List<SelectListItem> Languages { get; }
@@ -20,8 +21,13 @@ namespace CodeCompete.Pages.Games
         [BindProperty]
         public int SelectedLanguage { get; set; } = 0;
 
+        public List<SelectListItem> Games { get; }
+
         [BindProperty]
-        public Game Game { get; set; }
+        public int SelectedGame { get; set; } = 0;
+
+        [BindProperty]
+        public Player Player { get; set; }
 
         public CreateModel(
             CodeCompete.Data.ApplicationDbContext context,
@@ -36,7 +42,16 @@ namespace CodeCompete.Pages.Games
                     Text = l.Name,
                     Selected = l.ProgrammingLanguageId == SelectedLanguage
                 }).ToList();
+
+            Games = context.Game
+                .Select(l => new SelectListItem
+                {
+                    Value = l.GameId.ToString(),
+                    Text = l.Name,
+                    Selected = l.GameId == SelectedGame
+                }).ToList();
         }
+
         public IActionResult OnGet()
         {
             return Page();
@@ -49,15 +64,17 @@ namespace CodeCompete.Pages.Games
                 return Page();
             }
 
-            Game.ApplicationUser = await _userManager.GetUserAsync(User);
+            Player.ApplicationUser = await _userManager.GetUserAsync(User);
 
-            if (Game.ApplicationUser == null)
+            if (Player.ApplicationUser == null)
             {
                 throw new ApplicationException("Cannot create a game with a user.");
             }
 
-            Game.ProgrammingLanguage = _context.ProgrammingLanguage.Where(l => l.ProgrammingLanguageId == SelectedLanguage).FirstOrDefault();
-            _context.Game.Add(Game);
+            Player.ProgrammingLanguage = _context.ProgrammingLanguage.Where(l => l.ProgrammingLanguageId == SelectedLanguage).FirstOrDefault();
+            Player.Game = _context.Game.Where(l => l.GameId == SelectedGame).FirstOrDefault();
+
+            _context.Player.Add(Player);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

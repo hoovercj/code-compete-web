@@ -12,6 +12,7 @@ namespace CodeCompete.Data
             SeedApplicationUsers.Initialize(serviceProvider);
             SeedProgrammingLanguages.Initialize(serviceProvider);
             SeedGames.Initialize(serviceProvider);
+            SeedPlayers.Initialize(serviceProvider);
         }
     }
 }

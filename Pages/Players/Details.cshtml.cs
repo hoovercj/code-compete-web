@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CodeCompete.Data;
 
-namespace CodeCompete.Pages.Games
+namespace CodeCompete.Pages.Players
 {
     public class DetailsModel : PageModel
     {
@@ -18,7 +18,7 @@ namespace CodeCompete.Pages.Games
             _context = context;
         }
 
-        public Game Game { get; set; }
+        public Player Player { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,12 +27,13 @@ namespace CodeCompete.Pages.Games
                 return NotFound();
             }
 
-            Game = await _context.Game
-                .Include(g => g.ApplicationUser)
-                .Include(g => g.ProgrammingLanguage)
-                .SingleOrDefaultAsync(g => g.GameId == id);
+            Player = await _context.Player
+                .Include(p => p.ApplicationUser)
+                .Include(p => p.ProgrammingLanguage)
+                .Include(p => p.Game)
+                .SingleOrDefaultAsync(p => p.PlayerId == id);
 
-            if (Game == null)
+            if (Player == null)
             {
                 return NotFound();
             }

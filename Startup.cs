@@ -39,6 +39,9 @@ namespace CodeCompete
                     options.Conventions.AuthorizeFolder("/Games");
                     options.Conventions.AllowAnonymousToPage("/Games/Index");
                     options.Conventions.AllowAnonymousToPage("/Games/Details");
+                    options.Conventions.AuthorizeFolder("/Players");
+                    options.Conventions.AllowAnonymousToPage("/Players/Index");
+                    options.Conventions.AllowAnonymousToPage("/Players/Details");
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
                 });
