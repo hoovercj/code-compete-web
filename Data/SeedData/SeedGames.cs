@@ -21,10 +21,10 @@ namespace CodeCompete.Data
                     return;   // DB has been seeded
                 }
 
-                List<ApplicationUser> users = context.Users.ToList();
-                List<ProgrammingLanguage> languages = context.ProgrammingLanguage.Take(4).ToList();
+                List<ApplicationUser> users = await context.Users.ToListAsync();
+                List<ProgrammingLanguage> languages = await context.ProgrammingLanguage.ToListAsync();
 
-                context.Game.AddRange(
+                await context.Game.AddRangeAsync(
                     new Game
                     {
                         Name = "Tic tac toe",
@@ -65,7 +65,7 @@ namespace CodeCompete.Data
                     }
                 );
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

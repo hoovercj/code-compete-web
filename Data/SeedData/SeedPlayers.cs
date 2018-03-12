@@ -21,11 +21,11 @@ namespace CodeCompete.Data
                     return;   // DB has been seeded
                 }
 
-                List<ApplicationUser> users = context.Users.ToList();
-                List<ProgrammingLanguage> languages = context.ProgrammingLanguage.ToList();
-                List<Game> games = context.Game.ToList();
+                List<ApplicationUser> users = await context.Users.ToListAsync();
+                List<ProgrammingLanguage> languages = await context.ProgrammingLanguage.ToListAsync();
+                List<Game> games = await context.Game.ToListAsync();
 
-                context.Player.AddRange(
+                await context.Player.AddRangeAsync(
                     new Player
                     {
                         Name = "Simple Player",
@@ -53,7 +53,7 @@ namespace CodeCompete.Data
                     }
                 );
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

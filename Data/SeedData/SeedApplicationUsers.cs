@@ -33,7 +33,7 @@ namespace CodeCompete.Data
                     await userManager.CreateAsync(user, "Abc!123");
                 }
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

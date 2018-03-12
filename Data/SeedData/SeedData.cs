@@ -7,7 +7,7 @@ namespace CodeCompete.Data
 {
     public static class SeedData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public async static void Initialize(IServiceProvider serviceProvider)
         {
             SeedApplicationUsers.Initialize(serviceProvider);
             SeedProgrammingLanguages.Initialize(serviceProvider);
