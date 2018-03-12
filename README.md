@@ -2,7 +2,7 @@
 
 # TODO: 
 * [X] Add programming language dropdown to game creation / edit screens
-* [ ] Scaffold views for players
+* [X] Scaffold views for players
 * [ ] Allow "matches"
     - [ ] Match model
     - [ ] "Normal" Match details view

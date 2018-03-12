@@ -28,7 +28,10 @@ namespace CodeCompete.Pages.Games
                 return NotFound();
             }
 
-            Game = await _context.Game.SingleOrDefaultAsync(m => m.GameId == id);
+            Game = await _context.Game
+                .Include(g => g.ProgrammingLanguage)
+                .Include(g => g.ApplicationUser)
+                .SingleOrDefaultAsync(g => g.GameId == id);
 
             if (Game == null)
             {
