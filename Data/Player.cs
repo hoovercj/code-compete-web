@@ -16,5 +16,7 @@ namespace CodeCompete.Data
         [Display(Name = "Source Code")]
         public string SourceCode { get; set; }
         public Game Game { get; set; }
+        [Display(Name = "Matches")]
+        public List<PlayerMatch> PlayerMatches { get; set; }
     }
 }

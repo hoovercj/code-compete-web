@@ -196,6 +196,26 @@ namespace CodeCompete.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Match",
+                columns: table => new
+                {
+                    MatchId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    GameId = table.Column<int>(nullable: true),
+                    Result = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Match", x => x.MatchId);
+                    table.ForeignKey(
+                        name: "FK_Match_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Player",
                 columns: table => new
                 {
@@ -229,6 +249,30 @@ namespace CodeCompete.Migrations
                         principalTable: "ProgrammingLanguage",
                         principalColumn: "ProgrammingLanguageId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayerMatch",
+                columns: table => new
+                {
+                    PlayerId = table.Column<int>(nullable: false),
+                    MatchId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerMatch", x => new { x.PlayerId, x.MatchId });
+                    table.ForeignKey(
+                        name: "FK_PlayerMatch_Match_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "Match",
+                        principalColumn: "MatchId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayerMatch_Player_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Player",
+                        principalColumn: "PlayerId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -279,6 +323,11 @@ namespace CodeCompete.Migrations
                 column: "ProgrammingLanguageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Match_GameId",
+                table: "Match",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Player_ApplicationUserId",
                 table: "Player",
                 column: "ApplicationUserId");
@@ -292,6 +341,11 @@ namespace CodeCompete.Migrations
                 name: "IX_Player_ProgrammingLanguageId",
                 table: "Player",
                 column: "ProgrammingLanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerMatch_MatchId",
+                table: "PlayerMatch",
+                column: "MatchId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -312,10 +366,16 @@ namespace CodeCompete.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Player");
+                name: "PlayerMatch");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Match");
+
+            migrationBuilder.DropTable(
+                name: "Player");
 
             migrationBuilder.DropTable(
                 name: "Game");

@@ -36,6 +36,7 @@ namespace CodeCompete
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
+                    options.Conventions.AuthorizeFolder("/Matches");
                     options.Conventions.AuthorizeFolder("/Games");
                     options.Conventions.AllowAnonymousToPage("/Games/Index");
                     options.Conventions.AllowAnonymousToPage("/Games/Details");

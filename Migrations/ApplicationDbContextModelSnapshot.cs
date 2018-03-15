@@ -93,6 +93,22 @@ namespace CodeCompete.Migrations
                     b.ToTable("Game");
                 });
 
+            modelBuilder.Entity("CodeCompete.Data.Match", b =>
+                {
+                    b.Property<int>("MatchId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("GameId");
+
+                    b.Property<string>("Result");
+
+                    b.HasKey("MatchId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Match");
+                });
+
             modelBuilder.Entity("CodeCompete.Data.Player", b =>
                 {
                     b.Property<int>("PlayerId")
@@ -119,6 +135,19 @@ namespace CodeCompete.Migrations
                     b.HasIndex("ProgrammingLanguageId");
 
                     b.ToTable("Player");
+                });
+
+            modelBuilder.Entity("CodeCompete.Data.PlayerMatch", b =>
+                {
+                    b.Property<int>("PlayerId");
+
+                    b.Property<int>("MatchId");
+
+                    b.HasKey("PlayerId", "MatchId");
+
+                    b.HasIndex("MatchId");
+
+                    b.ToTable("PlayerMatch");
                 });
 
             modelBuilder.Entity("CodeCompete.Data.ProgrammingLanguage", b =>
@@ -251,6 +280,13 @@ namespace CodeCompete.Migrations
                         .HasForeignKey("ProgrammingLanguageId");
                 });
 
+            modelBuilder.Entity("CodeCompete.Data.Match", b =>
+                {
+                    b.HasOne("CodeCompete.Data.Game", "Game")
+                        .WithMany("Matches")
+                        .HasForeignKey("GameId");
+                });
+
             modelBuilder.Entity("CodeCompete.Data.Player", b =>
                 {
                     b.HasOne("CodeCompete.Data.ApplicationUser", "ApplicationUser")
@@ -264,6 +300,19 @@ namespace CodeCompete.Migrations
                     b.HasOne("CodeCompete.Data.ProgrammingLanguage", "ProgrammingLanguage")
                         .WithMany()
                         .HasForeignKey("ProgrammingLanguageId");
+                });
+
+            modelBuilder.Entity("CodeCompete.Data.PlayerMatch", b =>
+                {
+                    b.HasOne("CodeCompete.Data.Match", "Match")
+                        .WithMany("PlayerMatches")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CodeCompete.Data.Player", "Player")
+                        .WithMany("PlayerMatches")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
