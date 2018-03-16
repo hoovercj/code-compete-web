@@ -27,7 +27,11 @@ namespace CodeCompete.Pages.Matches
                 return NotFound();
             }
 
-            Match = await _context.Match.SingleOrDefaultAsync(m => m.MatchId == id);
+            Match = await _context.Match
+                .Include(m => m.Game)
+                .Include(m => m.PlayerMatches)
+                .ThenInclude(m => m.Player)
+                .SingleOrDefaultAsync(m => m.MatchId == id);
 
             if (Match == null)
             {

@@ -28,7 +28,11 @@ namespace CodeCompete.Pages.Matches
                 return NotFound();
             }
 
-            Match = await _context.Match.SingleOrDefaultAsync(m => m.MatchId == id);
+            Match = await _context.Match
+                .Include(m => m.Game)
+                .Include(m => m.PlayerMatches)
+                .ThenInclude(m => m.Player)
+                .SingleOrDefaultAsync(m => m.MatchId == id);
 
             if (Match == null)
             {
@@ -44,11 +48,25 @@ namespace CodeCompete.Pages.Matches
                 return NotFound();
             }
 
-            Match = await _context.Match.FindAsync(id);
+            Match = await _context.Match
+                .Include(m => m.Game)
+                .Include(m => m.PlayerMatches)
+                .ThenInclude(m => m.Player)
+                .FirstAsync(m => m.MatchId == id);
 
             if (Match != null)
             {
+                Match.Game.Matches.Remove(Match);
+                _context.Game.Update(Match.Game);
+
+                foreach (PlayerMatch p in Match.PlayerMatches)
+                {
+                    p.Player.PlayerMatches.Remove(p);
+                    _context.Player.Update(p.Player);
+                }
+                Match.PlayerMatches.Clear();
                 _context.Match.Remove(Match);
+
                 await _context.SaveChangesAsync();
             }
 

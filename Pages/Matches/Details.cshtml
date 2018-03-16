@@ -1,4 +1,4 @@
-@page
+@page "{id:int}"
 @model CodeCompete.Pages.Matches.DetailsModel
 
 @{
@@ -11,6 +11,18 @@
     <h4>Match</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Match.Game)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Match.Game.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Match.PlayerMatches)
+        </dt>
+        <dd>
+            @String.Join(", ", @Model.Match.PlayerMatches.Select(p => p.Player.Name).ToArray())
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Match.Result)
         </dt>
