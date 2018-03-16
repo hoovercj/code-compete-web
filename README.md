@@ -1,10 +1,9 @@
 # CodeCompete
 
-# TODO: 
-* [X] Add programming language dropdown to game creation / edit screens
-* [X] Scaffold views for players
-* [ ] Allow "matches"
-    - [ ] Match model
-    - [ ] "Normal" Match details view
-    - [ ] "Normal" Match index view
-    - [ ] Match Create view -- is it normal?
+A very simple website for creating "games" such as Tic Tac Toe or Batlleship and "players" for those games.
+
+"Matches" can then be created to match different players against each other to play a game.
+
+Currently creating a match does nothing, but the plan is to execute the game and players and present the results.
+
+The website is currently powered by asp.net core razor pages and entity framework core with sqlite.
